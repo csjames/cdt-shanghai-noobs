@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Simple Ride Sharing</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+  	<div id="maps" class="row">
+	   	<div id="allTrips" class="col-md-6">
+	   		<p class="mapTitle">Before</p>
+	   	</div>
+	   	<div id="sharedAndNotShared" class="col-md-6">
+	   		<p class="mapTitle">After</p>
+	   	</div>
+	   	<div id="shared" class="col-md-0">
+	   		<p class="mapTitle">Shared</p>
+	   	</div>
+   	</div>
+
+   	<div class="row">
+	  <div class="col-md-2 offset-md-1">
+	   		<h4 class="dataDesc" id="totalRides"></h4>
+	   	</div>
+	   	<div class="col-md-2" >
+	   		<h4 class="dataDesc" id="sharedRides"></h4>
+	   	</div>
+	   	<div class="col-md-2">
+	   		<h4 class="dataDesc" id="collapsedRides"></h4>
+	   	</div>
+	   	<div class="col-md-2">
+	   		<h4 class="dataDesc" id="algorithm"></h4>
+	   	</div>
+   	</div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
+	<script src="https://js.arcgis.com/4.6/"></script>
+
+	<script>
+
+	require([ 
+      "esri/Graphic",
+	  "esri/Map",
+	  "esri/views/MapView",
+	  "dojo/domReady!"
+	], function(Graphic, Map, MapView){
+		console.log("yay");
+
+		function makeMap(gl) {
+			var map = new Map({
+		    	basemap: "dark-gray"
+		 	});
+		 	return map;
+		}
+
+		function addToView(map, id) {
+			var view = new MapView({
+			    container: id,  // Reference to the scene div created in step 5
+			    map: map,  // Reference to the map object created before the scene
+			    zoom: 10,  // Sets zoom level based on level of detail (LOD)
+			    center: [-74.0060 , 40.78431]  // Sets center point of view using longitude,latitude
+		  	});
+		  	return view;
+		}
+		  
+	  var allMap = makeMap();
+	  var allMapView = addToView(allMap, "allTrips")
+		      	var markerSymbol2 = {
+		        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+		        color: [226, 119, 40],
+		        outline: null,
+		        size: 4,
+		      };
+
+  		setTimeout(function() {
+	  	// 	for (var i = 0; i < 15000; i++) {
+	  	// 		var markerSymbol = {
+		  //       type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+		  //       color: [226, 119, 40],
+		  //       outline: null,
+		  //       size: 2,
+		  //     	};
+
+				// allMapView.graphics.add(new Graphic({
+		  // 	 		geometry: { type : "point", longitude: -74.0060 - Math.random() + 1, latitude: 40.78431  - Math.random() + 1},
+		  // 	 		symbol: markerSymbol
+		  // 	 	}));
+	  	// 	}
+
+	  	// 	for (var i = 0; i < 15000; i++) {
+	  			
+	  	// 	}
+
+	  var allSharedMap = makeMap();
+	  var allSharedMapView = addToView(allSharedMap, "sharedAndNotShared")
+
+	  var sharedMap = makeMap();
+	  addToView(sharedMap, "shared")
+
+	  $.getJSON( "/compute", function( data ) {
+
+			$("#totalRides").html("Total Rides: " + data.totalRides);
+			$("#collapsedRides").html("Collapsed Rides: " + data.collapsedRides);
+			$("#sharedRides").html("Shared Rides: " + data.sharedRides);
+			$("#algorithm").html("Algorithm: " + data.algorithm);
+
+			  for (var i = 0; i < data["collapsedDropoffArray"].length; i++) {
+			  	var markerSymbol = {
+		        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+		        color: [40, 119, 226],
+		        outline: null,
+		        size: 9,
+		      	};
+
+
+				allMapView.graphics.add(new Graphic({
+		  	 		geometry: data["collapsedDropoffArray"][i],
+		  	 		symbol: markerSymbol
+		  	 	}));
+			  }
+
+			  for (var i = 0; i < data["collapsedPickupArray"].length; i++) {
+			  	var markerSymbol = {
+		        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+		        color: [226, 119, 40],
+		        outline: null,
+		        size: 9,
+		      	};
+
+				allMapView.graphics.add(new Graphic({
+		  	 		geometry: data["collapsedPickupArray"][i],
+		  	 		symbol: markerSymbol
+		  	 	}));
+			  }
+
+			  for (var i = 0; i < data["sharedDropoffArray"].length; i++) {
+
+			  	var markerSymbol = {
+		        type: "simple-marker",
+		        color: [40, 119, 226],
+		        outline: null,
+		        size: 9,
+		      	};
+
+
+				allSharedMapView.graphics.add(new Graphic({
+		  	 		geometry: data["sharedDropoffArray"][i],
+		  	 		symbol: markerSymbol
+		  	 	}));
+			  }
+
+			  for (var i = 0; i < data["sharedPickupArray"].length; i++) {
+
+			  	var markerSymbol = {
+		        type: "simple-marker",
+		        color: [226, 119, 40],
+		        outline: null,
+		        size: 9,
+		      	};
+
+				allSharedMapView.graphics.add(new Graphic({
+		  	 		geometry: data["sharedPickupArray"][i],
+		  	 		symbol: markerSymbol
+		  	 	}));
+			  }
+
+			});
+	  	}, 3000)
+	 
+	  
+	});
+	</script>
+  </body>
+</html>

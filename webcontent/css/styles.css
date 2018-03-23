@@ -1,0 +1,27 @@
+html, body {
+	width: 100%;
+	height: 100%;
+}
+#maps, #sharedAndNotShared, #allTrips, #shared {
+	height: 98%;
+	z-index: 1;
+}
+
+#settingsContainer {
+	height: 2%;
+}
+
+.mapTitle {
+	margin-left: 200px;
+	position: absolute;
+	color: white;
+	z-index: 2;
+	font-size: 24px;
+}
+
+.dataDesc {
+	margin-left: 200px;
+	color: black;
+	font-size: 24px;
+}
+
