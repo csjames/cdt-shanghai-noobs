@@ -19,7 +19,7 @@ Implement less naive algorithms to increase percentage of shared rides.
 
 ## Initial Data Reduction
 
-### Bash Tools
+### Terminal commands for quick data partitioning... Props easy with panda also
 
 ```awk -F "," data_file.csv 'if $6 ~ /2013-03-25/ { print $0 }' > 2013-03-25.csv # ~ 500k lines```
 

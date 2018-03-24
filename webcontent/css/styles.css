@@ -3,12 +3,8 @@ html, body {
 	height: 100%;
 }
 #maps, #sharedAndNotShared, #allTrips, #shared {
-	height: 98%;
+	height: 100%;
 	z-index: 1;
-}
-
-#settingsContainer {
-	height: 2%;
 }
 
 .mapTitle {
@@ -16,12 +12,35 @@ html, body {
 	position: absolute;
 	color: white;
 	z-index: 2;
-	font-size: 24px;
+	font-size: 48px;
 }
 
 .dataDesc {
-	margin-left: 200px;
 	color: black;
 	font-size: 24px;
+	margin: 20px;
+	padding: 20px;
 }
 
+.key {
+	color: white;
+	font-size: 24px;
+	margin: 20px;
+	padding: 20px;
+}
+
+.orange {
+	background-color: #2877E2
+}
+
+.blue {
+	background-color: #E27728
+}
+
+.settings {
+	background-color: #00000045
+}
+
+.form {
+	padding: 20px;
+}

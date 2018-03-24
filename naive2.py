@@ -1,8 +1,10 @@
 import pandas as pd
 import numpy as np
 import json
+import traceback
 
-MAX_WAITING_TIME = 15
+MAX_WAITING_TIME = 10
+
 HAPPY_WALKING_DISTANCE = 0.2
 
 kms_per_radian = 6371.0088
@@ -41,12 +43,11 @@ def distance_on_sphere_numpy(coordinate_array):
     # Multiply by earth's radius to obtain distance in km
     return arc * EARTH_RADIUS
 
-def compute(df):
+def compute(df, HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE, MAX_WAITING_TIME):
 	group_10m = df.groupby(pd.Grouper(freq=str(MAX_WAITING_TIME)+'Min'))
 
 	collapsedJobs = []
 	sharedJobs = []
-
 
 	for key, item in group_10m:
 		try:
@@ -58,7 +59,7 @@ def compute(df):
 			if group.shape[0] == 1:
 				continue
 
-			print(group.shape)
+			# print(group.shape)
 		
 			pickupCoords = group.as_matrix(columns=['pickup_latitude', 'pickup_longitude'])
 			pickupDistances = distance_on_sphere_numpy(pickupCoords)
@@ -79,7 +80,7 @@ def compute(df):
 						continue
 
 					if j < HAPPY_WALKING_DISTANCE:
-						if pickupDistances[x][y] < HAPPY_WALKING_DISTANCE:
+						if pickupDistances[x][y] < HAPPY_PICKUP_WALKING_DISTANCE:
 							# print(":O")
 							# print("we have a match so take this one out the game..")
 							

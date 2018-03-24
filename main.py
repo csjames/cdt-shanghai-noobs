@@ -14,15 +14,16 @@ from scipy.spatial.distance import pdist, squareform
 from models import RideSharingResponse
 
 from flask import Flask
+from flask import request
 
 import naive2
+import naiveN
+
 
 app = Flask(__name__, static_url_path='', static_folder='webcontent')
 
-# np.set_printoptions(threshold=np.nan)
-
 df = ''
-MIN_SEATS_SHAREABLE = 2
+MIN_SEATS_SHAREABLE = 4
 
 def parse_dates(x):
     return dt.datetime.strptime(x, '%Y-%m-%d %H:%M:%S')
@@ -34,7 +35,7 @@ def get_centermost_point(cluster):
 
 print ("Reading CSV...")
 
-df = pd.read_csv('2013-11-25-40k.csv',
+df = pd.read_csv('2013-11-25-reduced.csv',
  names=["medallion", "hack_license", "vendor_id", "rate_code", "store_and_fwd_flag", "pickup_datetime", "dropoff_datetime", "passenger_count", "trip_time_in_secs", "trip_distance", "pickup_longitude", "pickup_latitude", "dropoff_longitude", "dropoff_latitude"],
  parse_dates=["pickup_datetime", "dropoff_datetime"],
  index_col="dropoff_datetime",
@@ -50,17 +51,33 @@ df = df.query("dropoff_latitude != 0")
 df = df.query("dropoff_longitude != 0")
 
 # only want shareable rides, so need seats free
-df = df.query("passenger_count < @MIN_SEATS_SHAREABLE")
+df = df.query("passenger_count <= @MIN_SEATS_SHAREABLE")
 
 df[~df.isin([np.nan, np.inf, -np.inf]).any(1)]
 
 # print(df.dtypes)
 print(df.shape)
 
-
 @app.route("/compute")
 def compute():
-	return naive2.compute(df)
+	print("Handling GET")
+	print(request.args['happy_walk_pickup'])
+	print(request.args['happy_walk_dropoff'])
+	print(request.args['max_delay_time'])
+	print(request.args['algorithm'])
+
+	if request.args['algorithm'] == "Naive N":
+		return naiveN.compute(df,  float(request.args['happy_walk_pickup']),
+	 float(request.args['happy_walk_dropoff']),
+	 float(request.args['max_delay_time']))
+	elif request.args['algorithm'] == "Naive 2":
+		return naive2.compute(df,  float(request.args['happy_walk_pickup']),
+	 float(request.args['happy_walk_dropoff']),
+	 float(request.args['max_delay_time']))
+	else:
+		return "{}"
+
+	
 	
 
 

@@ -21,40 +21,76 @@
   <body>
 
   	<div id="maps" class="row">
-	   	<div id="allTrips" class="col-md-6">
+	   	<div id="allTrips" class="col-md-5">
 	   		<p class="mapTitle">Before</p>
 	   	</div>
-	   	<div id="sharedAndNotShared" class="col-md-6">
+	   	<div id="sharedAndNotShared" class="col-md-5">
 	   		<p class="mapTitle">After</p>
 	   	</div>
-	   	<div id="shared" class="col-md-0">
-	   		<p class="mapTitle">Shared</p>
-	   	</div>
-   	</div>
+	   	<div id="shared" class="col-md-2">
 
-   	<div class="row">
-	  <div class="col-md-2 offset-md-1">
+			<h4 class="key settings" style="">Settings</h4>
+
+	   		<div class="container">
+   				<form role="form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-8" for="happy_walk_pickup">Happy Walking Distance for Pickup (Km)</label>
+                        <div class="col-sm-10">
+                            <input type="text" name= "happy_walk_pickup" class="form-control" id="happy_walk_pickup" value="0.2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-8" for="happy_walk_dropoff">Happy Walking Distance for Dropoff (Km)</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="happy_walk_dropoff" class="form-control" id="happy_walk_dropoff" value="0.2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-8" for="max_delay_time">Maximum Delay Time (Minutes)</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="max_delay_time" class="form-control" id="max_delay_time" value="10">
+                        </div>
+                    </div> 
+                    <div class="form-group">
+	                    <label class="control-label col-sm-8" for="algorithm">Select Algorithm:</label>
+	                    <div class="col-sm-10">
+						  <select class="form-control" name="algorithm" id="algorithmChoice">
+						    <option>Naive 2</option>
+						    <option>Naive N</option>
+						  </select>
+						</div>
+					</div>
+                    <div class="form-group">
+                    	<div class="col-sm-10">
+					<button type="button" class="btn btn-info" id="button">Update</button>
+				</div>
+				</div>
+ 				</form>
+			</div>
+
+			<h4 class="key orange" style="">Pickup</h4>
+
+			<h4 class="key blue" style="">Dropoff</h4>
+
 	   		<h4 class="dataDesc" id="totalRides"></h4>
-	   	</div>
-	   	<div class="col-md-2" >
+
 	   		<h4 class="dataDesc" id="sharedRides"></h4>
-	   	</div>
-	   	<div class="col-md-2">
+
 	   		<h4 class="dataDesc" id="collapsedRides"></h4>
-	   	</div>
-	   	<div class="col-md-2">
+
 	   		<h4 class="dataDesc" id="algorithm"></h4>
+
+	   		<h4 class="dataDesc">New York Block Size 80m x 274m</h4>
 	   	</div>
    	</div>
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
-	<script src="https://js.arcgis.com/4.6/"></script>
+    <link rel="stylesheet" href="/css/dodo.css">
+	<script src="/js/dojo.js"></script>
 
 	<script>
 
@@ -68,7 +104,7 @@
 
 		function makeMap(gl) {
 			var map = new Map({
-		    	basemap: "dark-gray"
+		    	basemap: "gray"
 		 	});
 		 	return map;
 		}
@@ -77,117 +113,96 @@
 			var view = new MapView({
 			    container: id,  // Reference to the scene div created in step 5
 			    map: map,  // Reference to the map object created before the scene
-			    zoom: 10,  // Sets zoom level based on level of detail (LOD)
-			    center: [-74.0060 , 40.78431]  // Sets center point of view using longitude,latitude
+			    zoom: 14,  // Sets zoom level based on level of detail (LOD)
+			    center: [-73.992 , 40.74104]  // Sets center point of view using longitude,latitude
 		  	});
 		  	return view;
 		}
 		  
 	  var allMap = makeMap();
 	  var allMapView = addToView(allMap, "allTrips")
-		      	var markerSymbol2 = {
-		        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-		        color: [226, 119, 40],
-		        outline: null,
-		        size: 4,
-		      };
-
-  		setTimeout(function() {
-	  	// 	for (var i = 0; i < 15000; i++) {
-	  	// 		var markerSymbol = {
-		  //       type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-		  //       color: [226, 119, 40],
-		  //       outline: null,
-		  //       size: 2,
-		  //     	};
-
-				// allMapView.graphics.add(new Graphic({
-		  // 	 		geometry: { type : "point", longitude: -74.0060 - Math.random() + 1, latitude: 40.78431  - Math.random() + 1},
-		  // 	 		symbol: markerSymbol
-		  // 	 	}));
-	  	// 	}
-
-	  	// 	for (var i = 0; i < 15000; i++) {
-	  			
-	  	// 	}
 
 	  var allSharedMap = makeMap();
 	  var allSharedMapView = addToView(allSharedMap, "sharedAndNotShared")
 
-	  var sharedMap = makeMap();
-	  addToView(sharedMap, "shared")
+	  $("#button").click(function(){
 
-	  $.getJSON( "/compute", function( data ) {
+	  	console.log("yay")
 
-			$("#totalRides").html("Total Rides: " + data.totalRides);
-			$("#collapsedRides").html("Collapsed Rides: " + data.collapsedRides);
-			$("#sharedRides").html("Shared Rides: " + data.sharedRides);
-			$("#algorithm").html("Algorithm: " + data.algorithm);
+  		allMapView.graphics.removeAll()
+  		allSharedMapView.graphics.removeAll()
 
-			  for (var i = 0; i < data["collapsedDropoffArray"].length; i++) {
-			  	var markerSymbol = {
-		        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-		        color: [40, 119, 226],
-		        outline: null,
-		        size: 9,
-		      	};
+	  	$.getJSON( "/compute?happy_walk_pickup="+$("#happy_walk_pickup").val()+"&happy_walk_dropoff="+$("#happy_walk_dropoff").val() + "&max_delay_time=" + $("#max_delay_time").val() + "&algorithm=" + $("#algorithmChoice").find("option:selected").text(), function( data ) {
 
+	  	console.log("got data")
 
-				allMapView.graphics.add(new Graphic({
-		  	 		geometry: data["collapsedDropoffArray"][i],
-		  	 		symbol: markerSymbol
-		  	 	}));
-			  }
+		$("#totalRides").html("Total Rides: " + data.totalRides);
+		$("#collapsedRides").html("Collapsed Rides: " + data.collapsedRides + "(" + parseFloat(data.collapsedRides/data.totalRides*100).toFixed(2) + "%)");
+		$("#sharedRides").html("Shared Rides: " + data.sharedRides);
+		$("#algorithm").html("Algorithm: " + data.algorithm);
 
-			  for (var i = 0; i < data["collapsedPickupArray"].length; i++) {
-			  	var markerSymbol = {
-		        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-		        color: [226, 119, 40],
-		        outline: null,
-		        size: 9,
-		      	};
-
-				allMapView.graphics.add(new Graphic({
-		  	 		geometry: data["collapsedPickupArray"][i],
-		  	 		symbol: markerSymbol
-		  	 	}));
-			  }
-
-			  for (var i = 0; i < data["sharedDropoffArray"].length; i++) {
-
-			  	var markerSymbol = {
-		        type: "simple-marker",
-		        color: [40, 119, 226],
-		        outline: null,
-		        size: 9,
-		      	};
+		  for (var i = 0; i < data["collapsedDropoffArray"].length; i++) {
+		  	var markerSymbol = {
+	        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+	        color: [40, 119, 226],
+	        outline: null,
+	        size: 9,
+	      	};
 
 
-				allSharedMapView.graphics.add(new Graphic({
-		  	 		geometry: data["sharedDropoffArray"][i],
-		  	 		symbol: markerSymbol
-		  	 	}));
-			  }
+			allMapView.graphics.add(new Graphic({
+	  	 		geometry: data["collapsedDropoffArray"][i],
+	  	 		symbol: markerSymbol
+	  	 	}));
+		  }
 
-			  for (var i = 0; i < data["sharedPickupArray"].length; i++) {
+		  for (var i = 0; i < data["collapsedPickupArray"].length; i++) {
+		  	var markerSymbol = {
+	        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+	        color: [226, 119, 40],
+	        outline: null,
+	        size: 9,
+	      	};
 
-			  	var markerSymbol = {
-		        type: "simple-marker",
-		        color: [226, 119, 40],
-		        outline: null,
-		        size: 9,
-		      	};
+			allMapView.graphics.add(new Graphic({
+	  	 		geometry: data["collapsedPickupArray"][i],
+	  	 		symbol: markerSymbol
+	  	 	}));
+		  }
 
-				allSharedMapView.graphics.add(new Graphic({
-		  	 		geometry: data["sharedPickupArray"][i],
-		  	 		symbol: markerSymbol
-		  	 	}));
-			  }
+		  for (var i = 0; i < data["sharedDropoffArray"].length; i++) {
 
-			});
-	  	}, 3000)
-	 
-	  
+		  	var markerSymbol = {
+	        type: "simple-marker",
+	        color: [40, 119, 226],
+	        outline: null,
+	        size: 9,
+	      	};
+
+
+			allSharedMapView.graphics.add(new Graphic({
+	  	 		geometry: data["sharedDropoffArray"][i],
+	  	 		symbol: markerSymbol
+	  	 	}));
+		  }
+
+		  for (var i = 0; i < data["sharedPickupArray"].length; i++) {
+
+		  	var markerSymbol = {
+	        type: "simple-marker",
+	        color: [226, 119, 40],
+	        outline: null,
+	        size: 9,
+	      	};
+
+			allSharedMapView.graphics.add(new Graphic({
+	  	 		geometry: data["sharedPickupArray"][i],
+	  	 		symbol: markerSymbol
+	  	 	}));
+		  }
+		});  
+	  	});
+
 	});
 	</script>
   </body>
