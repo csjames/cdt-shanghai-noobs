@@ -70,6 +70,8 @@ def compute(df, HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE, MAX_WAITI
 			pickupCoords = group.as_matrix(columns=['pickup_latitude', 'pickup_longitude'])
 			pickupDistances = distance_on_sphere_numpy(pickupCoords)
 
+			print(pickupCoords)
+			
 			dropoffCoords = group.as_matrix(columns=['dropoff_latitude', 'dropoff_longitude'])
 			dropoffDistances = distance_on_sphere_numpy(dropoffCoords)
 
@@ -89,10 +91,10 @@ def compute(df, HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE, MAX_WAITI
 
 					if j < HAPPY_WALKING_DISTANCE:
 						if pickupDistances[x][y] < HAPPY_PICKUP_WALKING_DISTANCE:
-
 							candidates.append(y)
 							collapsedJobs.append(group.iloc[[y]])
 							dropoffDistances[y] = np.arange(1000, 1000+dropoffDistances.shape[1], dtype=float)
+					
 					y = y + 1
 
 				if len(candidates) > 0: 

@@ -17,7 +17,7 @@ from flask import request
 
 import naive2
 import naiveN
-
+import acceptablearrival
 
 app = Flask(__name__, static_url_path='', static_folder='webcontent')
 
@@ -75,6 +75,8 @@ def compute():
 		return naive2.compute(df,  float(request.args['happy_walk_pickup']),
 	 float(request.args['happy_walk_dropoff']),
 	 float(request.args['max_delay_time']))
+	elif request.args['algorithm'] == "Minimal Delay":
+		return acceptablearrival.compute(df)
 	else:
 		return "{}"
 
