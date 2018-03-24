@@ -48,6 +48,8 @@ df.drop(["medallion", "hack_license"], axis=1, inplace=True)
 # remove rides with no dropoff
 df = df.query("dropoff_latitude != 0")
 df = df.query("dropoff_longitude != 0")
+df = df.query("pickup_latitude != 0")
+df = df.query("pickup_longitude != 0")
 
 # only want shareable rides, so need seats free
 df = df.query("passenger_count <= @MIN_SEATS_SHAREABLE")

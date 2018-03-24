@@ -34,13 +34,13 @@
 	   		<div class="container">
    				<form role="form">
                     <div class="form-group">
-                        <label class="control-label col-sm-8" for="happy_walk_pickup">Happy Walking Distance for Pickup (Km)</label>
+                        <label class="control-label col-sm-8" for="happy_walk_pickup">Walking Distance for Pickup (Km)</label>
                         <div class="col-sm-10">
                             <input type="text" name= "happy_walk_pickup" class="form-control" id="happy_walk_pickup" value="0.2">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-8" for="happy_walk_dropoff">Happy Walking Distance for Dropoff (Km)</label>
+                        <label class="control-label col-sm-8" for="happy_walk_dropoff">Walking Distance for Dropoff (Km)</label>
                         <div class="col-sm-10">
                             <input type="text" name="happy_walk_dropoff" class="form-control" id="happy_walk_dropoff" value="0.2">
                         </div>
@@ -137,7 +137,7 @@
 	  	console.log("got data")
 
 		$("#totalRides").html("Total Rides: " + data.totalRides);
-		$("#collapsedRides").html("Collapsed Rides: " + data.collapsedRides + "(" + parseFloat(data.collapsedRides/data.totalRides*100).toFixed(2) + "%)");
+		$("#collapsedRides").html("Shareable Rides: " + data.collapsedRides + "(" + parseFloat(data.collapsedRides/data.totalRides*100).toFixed(2) + "%)");
 		$("#sharedRides").html("Shared Rides: " + data.sharedRides);
 		$("#algorithm").html("Algorithm: " + data.algorithm);
 
