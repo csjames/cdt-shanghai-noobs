@@ -9,7 +9,7 @@ from dateutil.relativedelta import *
 def compute(df, HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE, MAX_WAITING_TIME):
     # espslion here should depend on HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE,
     epsilon = (HAPPY_PICKUP_WALKING_DISTANCE+HAPPY_WALKING_DISTANCE) / 6371.0088  # kilometers per radian
-    a = 2
+    a = 10
     # this one for me to divide data by time
     initial = dt.datetime.strptime('2013-11-25 00:00:00', '%Y-%m-%d %H:%M:%S')
 
@@ -114,10 +114,10 @@ def compute(df, HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE, MAX_WAITI
         'sharedRides': len(used) / 2,
         'algorithm': 'DBSCAN'}
     print(len(collapsedDropoffArray))
-    data = json.dumps(dataDict['collapsedRides'])
+    data = json.dumps(dataDict)
     return data
 
-#test
+'''#test
 def parse_dates(x):
     return dt.datetime.strptime(x, '%Y-%m-%d %H:%M:%S')
 inputfile = r'C:\Users\evanxephon\Desktop\NYCFareData\2013-11-25.csv'
@@ -131,4 +131,4 @@ df00.drop(["medallion", "hack_license"], axis=1, inplace=True)
 df00.dropna(axis=0)
 df00 = df00.loc[df00['passenger_count']<4]
 #for t in range(10,1000,10):
-print(compute(df00,0.05,0.05,10))
+print(compute(df00,0.05,0.05,10))'''
