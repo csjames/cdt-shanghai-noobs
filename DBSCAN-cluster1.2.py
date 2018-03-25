@@ -63,7 +63,7 @@ def compute(df, HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE, MAX_WAITI
                                 used.append(j)
                                 used.append(k)
                                 used0.append(j)
-                                used0.append(j)
+                                used0.append(k)
                                 #used_label.append(j,k)
                             # export the parameter
                                 collapsedJobDropoffDict = {}
