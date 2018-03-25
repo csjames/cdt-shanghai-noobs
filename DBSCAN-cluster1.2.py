@@ -54,9 +54,9 @@ def compute(df, HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE, MAX_WAITI
             for j in range(len(dfp.index)-1):
 # exclude labels= -1 which is noise
                 used0 = []
-                if (j not in used0) and (db1.labels_[j]!=-1) and (db2.labels_[j]!=-1):
+                if (j not in used0) & (db1.labels_[j]!=-1) & (db2.labels_[j]!=-1):
                     for k in range(len(dfp.index)-1):
-                        if (k not in used0) and (k!=j)and (db1.labels_[k]!=-1) and (db2.labels_[k]!=-1):
+                        if (k not in used0) and (k!=j) & (db1.labels_[k]!=-1) & (db2.labels_[k]!=-1):
                     # the pass_count shall be < 5 in all
                             used_label = []
                             if (db1.labels_[j] == db1.labels_[k])&(db2.labels_[j] == db2.labels_[k])&((dfp.iloc[j,0]+dfp.iloc[k,0])<5):
