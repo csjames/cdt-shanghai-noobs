@@ -87,8 +87,6 @@ def compute(df):
 					first = group.iloc[[x]]
 					second = group.iloc[[y]]
 
-					# print(str(x) + " " + str(y))
-
 					# is first pickup before second
 					# consider change of duration for second ride aswell!
 					if pd.Timedelta(second["pickup_datetime"].values[0] - first["pickup_datetime"].values[0]).seconds >= 0 and pd.Timedelta(second.index.values[0] - first.index.values[0]).seconds < time_matrix_delay[x][y]:
@@ -176,6 +174,7 @@ def compute(df):
 									for k in i:
 										print(x)
 										time_matrix_delay[x][g] = 0
+										time_matrix_delay[y][g] = 0
 										time_matrix_delay[g][x] = 0
 										time_matrix_delay[g][y] = 0
 										g+=1

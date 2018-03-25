@@ -20,9 +20,9 @@ Minimal Delay: Algorithm which joins pairs of rides based on acceptable dropoff 
 
 * Setup with a New York map export, or preferably a North America export to capture adjacent areas 
 
-* Install anaconda
+* Install anaconda https://www.anaconda.com/download
 
-* pip3 install geopy flask flask
+* pip3 install geopy flask
 
 * Install osrm python bindings ```cd python-osrm && python setup.py install``` This library required modifications to function correctly as OSRM API changed recently
 
@@ -30,7 +30,9 @@ Minimal Delay: Algorithm which joins pairs of rides based on acceptable dropoff 
 
 * Navigate to http://localhost:5000/index.html
 
-## Initial Data Reduction
+## Datasets
+
+Inside this repository are some reduced data sets for quick algorithm testing. They all start with 2013-03-25 and do not have the data headers included.
 
 ### Terminal commands for quick data partitioning
 

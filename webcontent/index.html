@@ -105,6 +105,7 @@
 	<script>
 
 	var rides = null;
+	var index = 0;
 
 	function getRides() {
 		return rides;
@@ -197,6 +198,7 @@
 	  $("#button").click(function(){
 
 	  	console.log("yay")
+	  	index = 0;
 
   		allMapView.graphics.removeAll()
   		allSharedMapView.graphics.removeAll()
@@ -222,16 +224,14 @@
 
 		  		addPolyline(allSharedMapView, rides[i]["geometry"]["coordinates"], i)
 		  	}
-
 		    $("#routeButton").click(function(){
   		
 		  		allMapView.graphics.removeAll()
 		  		allSharedMapView.graphics.removeAll()
 
 		    	console.log(rides)
-		    	var index = Math.random()*data["rides"].length-1;
 		    	console.log(Math.round(index));
-		   		addPolyline(allSharedMapView, getRides()[Math.round(index)]["geometry"]["coordinates"], Math.round(index))
+		   		addPolyline(allSharedMapView, getRides()[index]["geometry"]["coordinates"], Math.round(index))
 
 			  	for(var i = 0; i < data["rides"].length; i++) {
 			  		console.log(data["rides"][i])
@@ -240,6 +240,8 @@
 			  		printMarker(allSharedMapView, [40, 226, 40], rides[i]["dropoff_first"], i)
 			  		printMarker(allSharedMapView, [255,215,0], rides[i]["pickup_second"], i)
 			  	}
+
+		    	index = (++index)%getRides().length;
 
 
 				  for (var i = 0; i < data["collapsedDropoffArray"].length; i++) {
