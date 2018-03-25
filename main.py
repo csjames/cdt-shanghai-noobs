@@ -34,7 +34,7 @@ def get_centermost_point(cluster):
 
 print ("Reading CSV...")
 
-df = pd.read_csv('2013-11-25-reduced.csv',
+df = pd.read_csv('2013-11-25-20k.csv',
  names=["medallion", "hack_license", "vendor_id", "rate_code", "store_and_fwd_flag", "pickup_datetime", "dropoff_datetime", "passenger_count", "trip_time_in_secs", "trip_distance", "pickup_longitude", "pickup_latitude", "dropoff_longitude", "dropoff_latitude"],
  parse_dates=["pickup_datetime", "dropoff_datetime"],
  index_col="dropoff_datetime",

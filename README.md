@@ -1,5 +1,6 @@
 # cdt-shanghai-noobs
-Visualisation of Ride Sharing
+
+Visualisation of Ride Sharing Algorithms
 
 ## Simple Ride Sharing 
 
@@ -11,15 +12,27 @@ Ride sharing algorithms vary in complexity and may optimise for various factors 
 
 Basic visualisation of rides
 Naive algorthithm which looks only at similiar pickup and dropoff locations, as well as similiar dropoff time.
+Minimal Delay: Algorithm which joins pairs of rides based on acceptable dropoff time delays.
 
-### Next Steps
+### Running the Server and viewing Visualizations
 
-Implement less naive algorithms to increase percentage of shared rides.
+* Install OSRM - Follow guide https://github.com/Project-OSRM/osrm-backend/wiki/Building-OSRM and configure to run on port 5001 (5000 is used by server)
 
+* Setup with a New York map export, or preferably a North America export to capture adjacent areas 
+
+* Install anaconda
+
+* pip3 install geopy flask flask
+
+* Install osrm python bindings ```cd python-osrm && python setup.py install``` This library required modifications to function correctly as OSRM API changed recently
+
+* Run with ```FLASK_APP=main.py flask run ```
+
+* Navigate to http://localhost:5000/index.html
 
 ## Initial Data Reduction
 
-### Terminal commands for quick data partitioning... Props easy with panda also
+### Terminal commands for quick data partitioning
 
 ```awk -F "," data_file.csv 'if $6 ~ /2013-03-25/ { print $0 }' > 2013-03-25.csv # ~ 500k lines```
 
@@ -28,6 +41,5 @@ Implement less naive algorithms to increase percentage of shared rides.
 ```head -n 2000 2013-03-25.csv > 2013-03-25-2k.csv ```
 
 ```head -n 200 2013-03-25.csv > 2013-03-25-200.csv # Now we have some data we can quickly test on```
-
 
 ```tail -k offset_count -n 2000 2013-03-25.csv > 2013-03-25-2k.csv ```
