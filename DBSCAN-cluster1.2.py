@@ -8,7 +8,7 @@ from dateutil.relativedelta import *
 # two parameters not used , and i think we need to find the relation between epsilon and HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE
 def compute(df, HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE, MAX_WAITING_TIME):
     # espslion here should depend on HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE,
-    epsilon = (HAPPY_PICKUP_WALKING_DISTANCE+HAPPY_WALKING_DISTANCE) / 6371.0088  # kilometers per radian
+    epsilon = 0.5(HAPPY_PICKUP_WALKING_DISTANCE+HAPPY_WALKING_DISTANCE) / 6371.0088  # kilometers per radian
     a = 2
     # this one for me to divide data by time
     initial = dt.datetime.strptime('2013-11-25 00:00:00', '%Y-%m-%d %H:%M:%S')
