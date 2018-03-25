@@ -179,7 +179,7 @@
 		  var lineSymbol = {
 		    type: "simple-line",  // autocasts as SimpleLineSymbol()
 		    color: [Math.random()*255,Math.random()*255,Math.random()*255],
-		    width: 2
+		    width: 4
 		  };
 
 		  var polylineGraphic = new Graphic({
@@ -241,7 +241,7 @@
 			  		printMarker(allSharedMapView, [255,215,0], rides[i]["pickup_second"], i)
 			  	}
 
-					  	
+
 				  for (var i = 0; i < data["collapsedDropoffArray"].length; i++) {
 				  	var markerSymbol = {
 			        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
