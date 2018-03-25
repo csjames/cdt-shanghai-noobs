@@ -1,4 +1,4 @@
-5from sklearn.cluster import DBSCAN
+from sklearn.cluster import DBSCAN
 import numpy as np
 import pandas as pd
 import json
@@ -9,7 +9,7 @@ from dateutil.relativedelta import *
 def compute(df, HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE, MAX_WAITING_TIME):
     # espslion here should depend on HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE,
     epsilon = (HAPPY_PICKUP_WALKING_DISTANCE+HAPPY_WALKING_DISTANCE) / 6371.0088  # kilometers per radian
-    a = 5
+    a = 4
     # this one for me to divide data by time
     initial = dt.datetime.strptime('2013-11-25 00:00:00', '%Y-%m-%d %H:%M:%S')
 
