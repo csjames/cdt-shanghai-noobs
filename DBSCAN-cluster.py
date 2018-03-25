@@ -99,7 +99,7 @@ def compute(df, HAPPY_PICKUP_WALKING_DISTANCE, HAPPY_WALKING_DISTANCE, MAX_WAITI
     data = json.dumps(dataDict)
     return data
 
-#test
+“”“#test
 def parse_dates(x):
     return dt.datetime.strptime(x, '%Y-%m-%d %H:%M:%S')
 inputfile = r'C:\Users\evanxephon\Desktop\NYCFareData\2013-11-25.csv'
@@ -111,4 +111,4 @@ df00 = pd.read_csv(inputfile,names=['medallion','hack_license','vendor_id','rate
 df00.drop(["medallion", "hack_license"], axis=1, inplace=True)
 # clean data of NaN ,but it seems not work
 df00.dropna(axis=0)
-print(compute(df00,50,50,10))
+print(compute(df00,50,50,10))”“”
